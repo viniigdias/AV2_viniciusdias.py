@@ -20,26 +20,26 @@ verify_password = lambda password, hashed_password: hash_password(password) == h
 connect_to_payment_system = lambda: True  # Função simulada para conectar ao sistema de pagamento
 
 # Expressão lambda para processar transações em dinheiro
-process_cash_transaction = lambda accounts, user_id, amount: q1_viniciusdias.update_account_balance(accounts, user_id, amount) if connect_to_payment_system() else {"Transaction canceled"}
+process_cash_transaction = lambda accounts, user_id, amount: q1_viniciusdias.update_account_balance(accounts, user_id, amount) if connect_to_payment_system() else {"Transação completa"}
 
 # Expressão lambda para aprovar o pagamento
 confirm_payment_approval = lambda: True
 
 # Expressão lambda para processar transações de transferência
-process_transfer_transaction = lambda accounts, user_id, amount: (process_cash_transaction(accounts, user_id, amount) if confirm_payment_approval() else {"Transaction canceled"})
+process_transfer_transaction = lambda accounts, user_id, amount: (process_cash_transaction(accounts, user_id, amount) if confirm_payment_approval() else {"Transação completa"})
 
 # Expressão lambda para criar uma transação
 create_transaction = lambda user_id, transaction_type, amount: (
-    {"User not found"} if user_id not in get_user_accounts() else
-    {"Invalid transaction type"} if transaction_type not in ['cash', 'transfer'] else
+    {"Usuario não encontrado"} if user_id not in get_user_accounts() else
+    {"Tipo de transação invalida"} if transaction_type not in ['cash', 'transfer'] else
     (process_cash_transaction(get_user_accounts(), user_id, amount) if transaction_type == 'cash' else
     process_transfer_transaction(get_user_accounts(), user_id, amount))
 )
 
 # Função para atualizar o saldo da conta
 update_account_balance = lambda accounts, user_id, amount: (
-    {"Transaction completed"} if user_id in accounts else
-    {"User not found"}
+    {"Transação completa"} if user_id in accounts else
+    {"Usuario não encontrado"}
 )
 
 # Função para cifrar uma mensagem utilizando AES
